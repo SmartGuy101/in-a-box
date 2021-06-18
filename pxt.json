@@ -1,29 +1,21 @@
 {
-    "name": "In a Box",
-    "description": "",
+    "name": "In-a-box",
     "dependencies": {
-        "device": "*",
-        "controller": "*",
-        "pxt-button-combos": "github:jwunderl/pxt-button-combos#v0.0.24",
-        "keyboard": "*",
-        "Color Fading": "github:jwunderl/pxt-color#v0.2.1",
-        "darts": "*",
-        "Timers": "github:microsoft/arcade-timers#v1.1.0"
+        "device": "*"
     },
     "files": [
-        "main.blocks",
-        "main.ts",
+        ".vscode/settings.json",
+        ".vscode/tasks.json",
         "README.md",
         "assets.json",
         "images.g.jres",
         "images.g.ts",
+        "main.blocks",
+        "main.ts",
+        "test.ts",
         "tilemap.g.jres",
         "tilemap.g.ts",
-        "main.py",
-        null
-    ],
-    "testFiles": [
-        "test.ts"
+        "tsconfig.json"
     ],
     "targetVersions": {
         "target": "1.4.44",
