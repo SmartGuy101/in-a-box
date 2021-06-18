@@ -4,11 +4,6 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "Player"
     },
-    "z`{}`pp)/ppHET],=lTW": {
-        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAREQEAAAAAAPHxAQAAAAAA8REBAAAAAAAR8QEAAAAAAPERAQAAAAAAEfEBAAAAAADx8QEAAAAAAPERAQAAAAAAEfEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Note1"
-    },
     "P9*cpIiIAtl!|h#SmTP+": {
         "data": "hwQPAA8AAAD/////////Dx8RHxEfER8PHxEfER8RHw8fER8RHxEfDx8REREREREPHxEREREREQ8fERERERERDx8REREREREPHxEREREREQ8fERERERERDx8REREREREPHxEREREREQ8fERERERERDx8REREREREPHxEREREREQ8=",
         "mimeType": "image/x-mkcd-f4",
@@ -19,10 +14,60 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "Mission Frame"
     },
+    "Zh_E7n^rU4xl4#cBWo[E": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8P8A8AAP///w/wDwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Hint"
+    },
+    "z`{}`pp)/ppHET],=lTW": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAREQEAAAAAAPHxAQAAAAAA8REBAAAAAAAR8QEAAAAAAPERAQAAAAAAEfEBAAAAAADx8QEAAAAAAPERAQAAAAAAEfEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Note"
+    },
     "(Cj/3%7^~iML0~0h6|e9": {
-        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAADdDQAAAAAA0CLSAAAAAAAg3S0AAAAAANDd3QAAAAAA0N3dAAAAAADQItIAAAAAACDdLQAAAAAA0N3dAAAAAADQ3d0AAAAAAAAiAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "Bullet"
+    },
+    "-AcARIyL5P*X1Q2Piz0U": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAGZmZmZmZgAAZmZmZmZmAACZZmZmZmYAAJlmZmZmZgAAmWZmZmZmAACZZmZmZmYAAJlmZmZmZgAAmWZmZmZmAACZZmZmZmYAAJlmZmZmZgAAZmZmZmZmAABmZmZmZmYAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Player_Up"
+    },
+    "9}Y@7g_%czlLLU+:hje9": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAGZmZmZmZgAAZmZmZmZmAABmZmZmZpkAAGZmZmZmmQAAZmZmZmaZAABmZmZmZpkAAGZmZmZmmQAAZmZmZmaZAABmZmZmZpkAAGZmZmZmmQAAZmZmZmZmAABmZmZmZmYAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Player_Down"
+    },
+    "36fPgl{n]HA{?zA,": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZpmZmZlmAABmmZmZmWYAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Player_Right"
+    },
+    "bfYL,PZ^:+WpTf!(Y*d-": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAGaZmZmZZgAAZpmZmZlmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Player_Left"
+    },
+    ":[EpwI530$$!OmPqL@M)": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAJmZZmZmZgAAmZlmZmZmAACZZmZmZmYAAJlmZmZmZgAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Player_TopLeft"
+    },
+    "FiAcLeX%-@zk`jpx{j{J": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAGZmZmaZmQAAZmZmZpmZAABmZmZmZpkAAGZmZmZmmQAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Player_BottomLeft"
+    },
+    "!,9/6|+#4,%l8tdfZd3R": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAABmZmZmZpkAAGZmZmZmmQAAZmZmZpmZAABmZmZmmZkAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Player_BottomRight"
+    },
+    "#ZH5codRxC~]3i|WPb(`": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAABmZmZmZmYAAGZmZmZmZgAAZmZmZmZmAACZZmZmZmYAAJlmZmZmZgAAmZlmZmZmAACZmWZmZmYAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Player_TopRight"
     },
     "*": {
         "mimeType": "image/x-mkcd-f4",
