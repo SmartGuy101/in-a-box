@@ -69,6 +69,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "Player_TopRight"
     },
+    "RvdPXUl!J=I^T]81b,_{": {
+        "data": "hwQYABgAAAAAZmZmZmZmZmZmZgBglpmZmZmZmZmZaQZmmZmZmZmZmZmZmWaWmZmZmZmZmZmZmWmWGRERERERERERkWmWEREREREREREREWmWEREREREREREREWmWEREREREREREREWmWEREREREREREREWmWEREREREREREREWmWEREREREREREREWmWEREREREREREREWmWEREREREREREREWmWEREREREREREREWmWEREREREREREREWmWEREREREREREREWmWEREREREREREREWmWEREREREREREREWmWEREREREREREREWmWGRERERERERERkWmWmZmZmZmZmZmZmWlmmZmZmZmZmZmZmWZglpmZmZmZmZmZaQYAZmZmZmZmZmZmZgA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "AI_Frame"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
