@@ -1,6 +1,7 @@
 namespace SpriteKind {
     export const Hint = SpriteKind.create()
     export const Note = SpriteKind.create()
+    export const UI = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     MyPlayer.setImage(assets.image`Player_Up`)
@@ -13,7 +14,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Ai_Talk_1 == true) {
-        if (!(Dashing) && statusbar.value == statusbar.max) {
+        if (!(Dashing) && DashMeter.value == DashMeter.max) {
             Dashing = true
             controller.moveSprite(MyPlayer, 0, 0)
             if (Direction == "Left") {
@@ -29,7 +30,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             MyPlayer.startEffect(effects.fire)
             MyPlayer.startEffect(effects.trail)
             MyPlayer.startEffect(effects.fire)
-            statusbar.value = 0
+            DashMeter.value = 0
             timer.after(100, function () {
                 MyPlayer.vx = 0
                 MyPlayer.vy = 0
@@ -76,13 +77,13 @@ function AI_Talk_1 () {
     game.showLongText("You will get boosted in the direction you are facing.", DialogLayout.Bottom)
     game.showLongText("But you have to recharge your dash before you can use it again.", DialogLayout.Bottom)
     game.showLongText("Good luck!!!", DialogLayout.Bottom)
-    statusbar = statusbars.create(55, 10, StatusBarKind.Energy)
-    statusbar.setBarBorder(2, 1)
-    statusbar.value = 0
-    statusbar.max = 50
-    statusbar.setStatusBarFlag(StatusBarFlag.SmoothTransition, true)
-    statusbar.bottom = 118
-    statusbar.left = 2
+    DashMeter = statusbars.create(55, 10, StatusBarKind.Energy)
+    DashMeter.setBarBorder(2, 1)
+    DashMeter.value = 50
+    DashMeter.max = 50
+    DashMeter.setStatusBarFlag(StatusBarFlag.SmoothTransition, true)
+    DashMeter.bottom = 118
+    DashMeter.left = 2
     Ai_Talk_1 = true
 }
 function SetPositions () {
@@ -107,12 +108,37 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         MyPlayer.setImage(assets.image`Player_BottomRight`)
     }
 })
+function LoadingScreen () {
+    scene.setBackgroundColor(9)
+    tiles.setTilemap(tilemap`LoadingScreen`)
+    scene.centerCameraAt(0, 0)
+    MyPlayer.destroy()
+    Hint.destroy()
+    Note_1.destroy()
+    DashMeter.destroy()
+    Loading_dots = sprites.create(assets.image`Loading dots`, SpriteKind.UI)
+    Cloud_Sprite = sprites.create(assets.image`Cloud`, SpriteKind.UI)
+    Loading_dots.setPosition(80, 60)
+    Cloud_Sprite.setPosition(14, 21)
+    animation.runImageAnimation(
+    Loading_dots,
+    assets.animation`Loading Dots`,
+    80,
+    true
+    )
+    for (let index = 0; index <= 500; index++) {
+        timer.after(500, function () {
+            Cloud_Sprite.x += 5
+        })
+    }
+}
 function InitializeVariables () {
     DashSpeed = 500
     Read = false
     Hint1_has_spawned = false
     Ai_Talk_1 = false
     Ai_Talk_1 = false
+    Level1Completed = false
     Note_1 = sprites.create(assets.image`Note`, SpriteKind.Note)
     MyPlayer = sprites.create(assets.image`Player`, SpriteKind.Player)
 }
@@ -135,12 +161,15 @@ function Note1 () {
         game.showLongText("Mission: Break out of this room", DialogLayout.Top)
     }
 }
+let Level1Completed = false
 let Hint1_has_spawned = false
 let Read = false
+let Cloud_Sprite: Sprite = null
+let Loading_dots: Sprite = null
 let Hint: Sprite = null
 let DashSpeed = 0
 let Direction = ""
-let statusbar: StatusBarSprite = null
+let DashMeter: StatusBarSprite = null
 let Dashing = false
 let Ai_Talk_1 = false
 let Note_1: Sprite = null
@@ -152,26 +181,35 @@ controller.moveSprite(MyPlayer)
 scene.cameraFollowSprite(MyPlayer)
 Note_1.say("A")
 game.onUpdate(function () {
-    if (Dashing && MyPlayer.tileKindAt(TileDirection.Left, assets.tile`myTile`)) {
+    if (Dashing && MyPlayer.tileKindAt(TileDirection.Left, assets.tile`Wall_1_Right_Cracked`)) {
         tiles.setWallAt(tiles.getTileLocation(4, 10), false)
         tiles.setTileAt(tiles.getTileLocation(4, 10), assets.tile`transparency16`)
         MyPlayer.vx = 100
         timer.after(550, function () {
             MyPlayer.vx = 0
         })
+        Level1Completed = true
+    }
+})
+game.onUpdate(function () {
+    if (Level1Completed == true) {
+        if (MyPlayer.tileKindAt(TileDirection.Center, assets.tile`Check Point`)) {
+            game.splash("You have escaped the room")
+            LoadingScreen()
+        }
     }
 })
 game.onUpdate(function () {
     if (Ai_Talk_1 == true) {
         if (!(Dashing)) {
-            statusbar.value += 1
+            DashMeter.value += 1
         }
     }
 })
 game.onUpdate(function () {
     if (Read == true) {
         if (Hint1_has_spawned == false) {
-            if (MyPlayer.tileKindAt(TileDirection.Left, assets.tile`myTile`)) {
+            if (MyPlayer.tileKindAt(TileDirection.Left, assets.tile`Wall_1_Right_Cracked`)) {
                 Hint1()
                 Hint1_has_spawned = true
             }
