@@ -117,19 +117,16 @@ function LoadingScreen () {
     Note_1.destroy()
     DashMeter.destroy()
     Loading_dots = sprites.create(assets.image`Loading dots`, SpriteKind.UI)
-    Cloud_Sprite = sprites.create(assets.image`Cloud`, SpriteKind.UI)
     Loading_dots.setPosition(80, 60)
-    Cloud_Sprite.setPosition(14, 21)
     animation.runImageAnimation(
     Loading_dots,
     assets.animation`Loading Dots`,
     80,
     true
     )
-    for (let index = 0; index <= 500; index++) {
-        timer.after(500, function () {
-            Cloud_Sprite.x += 5
-        })
+    for (let index = 0; index < 30; index++) {
+        Cloud_Sprite = sprites.createProjectileFromSide(assets.image`Cloud`, 100, 0)
+        Cloud_Sprite.setPosition(randint(0, 160), randint(0, 120))
     }
 }
 function InitializeVariables () {
