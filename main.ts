@@ -109,6 +109,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function LoadingScreen () {
+    Level1Completed = true
     scene.setBackgroundColor(9)
     tiles.setTilemap(tilemap`LoadingScreen`)
     scene.centerCameraAt(0, 0)
@@ -124,10 +125,6 @@ function LoadingScreen () {
     80,
     true
     )
-    for (let index = 0; index < 30; index++) {
-        Cloud_Sprite = sprites.createProjectileFromSide(assets.image`Cloud`, 100, 0)
-        Cloud_Sprite.setPosition(randint(0, 160), randint(0, 120))
-    }
 }
 function InitializeVariables () {
     DashSpeed = 500
@@ -158,11 +155,11 @@ function Note1 () {
         game.showLongText("Mission: Break out of this room", DialogLayout.Top)
     }
 }
-let Level1Completed = false
+let Cloud_Sprite: Sprite = null
 let Hint1_has_spawned = false
 let Read = false
-let Cloud_Sprite: Sprite = null
 let Loading_dots: Sprite = null
+let Level1Completed = false
 let Hint: Sprite = null
 let DashSpeed = 0
 let Direction = ""
@@ -185,15 +182,12 @@ game.onUpdate(function () {
         timer.after(550, function () {
             MyPlayer.vx = 0
         })
-        Level1Completed = true
     }
 })
 game.onUpdate(function () {
-    if (Level1Completed == true) {
-        if (MyPlayer.tileKindAt(TileDirection.Center, assets.tile`Check Point`)) {
-            game.splash("You have escaped the room")
-            LoadingScreen()
-        }
+    if (MyPlayer.tileKindAt(TileDirection.Center, assets.tile`Check Point`)) {
+        game.splash("You have escaped the room")
+        LoadingScreen()
     }
 })
 game.onUpdate(function () {
@@ -230,5 +224,11 @@ game.onUpdate(function () {
         Direction = "Up"
     } else if (MyPlayer.vy < 0) {
         Direction = "Down"
+    }
+})
+game.onUpdateInterval(3000, function () {
+    if (Level1Completed) {
+        Cloud_Sprite = sprites.createProjectileFromSide(assets.image`Cloud`, 100, 0)
+        Cloud_Sprite.setPosition(0, randint(0, 120))
     }
 })
