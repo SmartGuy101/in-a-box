@@ -86,6 +86,10 @@ function AI_Talk_1 () {
     DashMeter.left = 2
     Ai_Talk_1 = true
 }
+function Level_2 () {
+    tiles.setTilemap(tilemap`level4`)
+    Meanies = sprites.create(assets.image`Meanies`, SpriteKind.Enemy)
+}
 function SetPositions () {
     tiles.placeOnTile(MyPlayer, tiles.getTileLocation(7, 8))
     tiles.placeOnTile(Note_1, tiles.getTileLocation(9, 6))
@@ -108,7 +112,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         MyPlayer.setImage(assets.image`Player_BottomRight`)
     }
 })
-function LoadingScreen () {
+function LoadingScreen (Duration: number) {
     Level1Completed = true
     scene.setBackgroundColor(9)
     tiles.setTilemap(tilemap`LoadingScreen`)
@@ -118,13 +122,20 @@ function LoadingScreen () {
     Note_1.destroy()
     DashMeter.destroy()
     Loading_dots = sprites.create(assets.image`Loading dots`, SpriteKind.UI)
+    Loading_text = sprites.create(assets.image`Loading Text`, SpriteKind.UI)
     Loading_dots.setPosition(80, 60)
+    Loading_text.setPosition(80, 50)
     animation.runImageAnimation(
     Loading_dots,
     assets.animation`Loading Dots`,
     80,
     true
     )
+    timer.after(Duration, function () {
+        Loading_dots.destroy()
+        Loading_text.destroy()
+        Level_2()
+    })
 }
 function InitializeVariables () {
     DashSpeed = 500
@@ -158,8 +169,10 @@ function Note1 () {
 let Cloud_Sprite: Sprite = null
 let Hint1_has_spawned = false
 let Read = false
+let Loading_text: Sprite = null
 let Loading_dots: Sprite = null
 let Level1Completed = false
+let Meanies: Sprite = null
 let Hint: Sprite = null
 let DashSpeed = 0
 let Direction = ""
@@ -187,7 +200,7 @@ game.onUpdate(function () {
 game.onUpdate(function () {
     if (MyPlayer.tileKindAt(TileDirection.Center, assets.tile`Check Point`)) {
         game.splash("You have escaped the room")
-        LoadingScreen()
+        LoadingScreen(5000)
     }
 })
 game.onUpdate(function () {
