@@ -87,8 +87,14 @@ function AI_Talk_1 () {
     Ai_Talk_1 = true
 }
 function Level_2 () {
-    tiles.setTilemap(tilemap`level4`)
-    Meanies = sprites.create(assets.image`Meanies`, SpriteKind.Enemy)
+    tiles.setTilemap(tilemap`level 2`)
+    Loading = false
+    MyPlayer = sprites.create(assets.image`Player`, SpriteKind.Player)
+    Bully_1 = sprites.create(assets.image`Meanies`, SpriteKind.Enemy)
+    tiles.placeOnTile(MyPlayer, tiles.getTileLocation(10, 17))
+    tiles.placeOnTile(Bully_1, tiles.getTileLocation(14, 2))
+    scene.cameraFollowSprite(MyPlayer)
+    controller.moveSprite(MyPlayer)
 }
 function SetPositions () {
     tiles.placeOnTile(MyPlayer, tiles.getTileLocation(7, 8))
@@ -113,7 +119,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function LoadingScreen (Duration: number) {
-    Level1Completed = true
+    Loading = true
     scene.setBackgroundColor(9)
     tiles.setTilemap(tilemap`LoadingScreen`)
     scene.centerCameraAt(0, 0)
@@ -167,12 +173,13 @@ function Note1 () {
     }
 }
 let Cloud_Sprite: Sprite = null
+let Level1Completed = false
 let Hint1_has_spawned = false
 let Read = false
 let Loading_text: Sprite = null
 let Loading_dots: Sprite = null
-let Level1Completed = false
-let Meanies: Sprite = null
+let Bully_1: Sprite = null
+let Loading = false
 let Hint: Sprite = null
 let DashSpeed = 0
 let Direction = ""
@@ -199,6 +206,7 @@ game.onUpdate(function () {
 })
 game.onUpdate(function () {
     if (MyPlayer.tileKindAt(TileDirection.Center, assets.tile`Check Point`)) {
+        Level1Completed = true
         game.splash("You have escaped the room")
         LoadingScreen(5000)
     }
@@ -240,7 +248,7 @@ game.onUpdate(function () {
     }
 })
 game.onUpdateInterval(3000, function () {
-    if (Level1Completed) {
+    if (Loading) {
         Cloud_Sprite = sprites.createProjectileFromSide(assets.image`Cloud`, 100, 0)
         Cloud_Sprite.setPosition(0, randint(0, 120))
     }
