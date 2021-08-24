@@ -3,7 +3,11 @@
     "dependencies": {
         "device": "*",
         "Timers": "github:microsoft/arcade-timers#v1.1.0",
-        "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.4.1"
+        "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.4.1",
+        "edge-connector": "*",
+        "arcade-tilemap-a-star": "github:jwunderl/arcade-tilemap-a-star#v0.3.5",
+        "arcade-sprite-util": "github:jwunderl/arcade-sprite-util#v0.2.4",
+        "arcade-text": "github:pelikhan/arcade-image-text#v0.0.4"
     },
     "files": [
         ".vscode/settings.json",

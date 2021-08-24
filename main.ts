@@ -162,13 +162,6 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         MyPlayer.setImage(assets.image`Player_BottomRight`)
     }
 })
-scene.onOverlapTile(SpriteKind.Player, sprites.castle.tileGrass2, function (sprite, location) {
-    Bully_1.follow(MyPlayer, 30)
-    Bully_2.follow(MyPlayer, 50)
-    if (location == tiles.getTileLocation(15, 4)) {
-    	
-    }
-})
 function LoadingScreen (Duration: number) {
     Cloud_Sprite = sprites.createProjectileFromSide(assets.image`Cloud`, 100, 0)
     Cloud_Sprite.setPosition(0, randint(0, 120))
@@ -252,7 +245,7 @@ Note_1.say("A")
 game.onUpdate(function () {
     if (MyPlayer.tileKindAt(TileDirection.Center, assets.tile`Check Point`)) {
         game.splash("You have escaped the room")
-        LoadingScreen(5000)
+        LoadingScreen(500)
     }
 })
 game.onUpdate(function () {
@@ -303,7 +296,7 @@ game.onUpdate(function () {
 })
 forever(function () {
     if (Level == 2) {
-        if (MyPlayer.overlapsWith(Bully_1) || MyPlayer.overlapsWith(Bully_2)) {
+        if (spriteutils.distanceBetween(MyPlayer, Bully_1) < 50 || spriteutils.distanceBetween(MyPlayer, Bully_2) < 50) {
             Bully_1.follow(MyPlayer, 30)
             Bully_2.follow(MyPlayer, 50)
         }
