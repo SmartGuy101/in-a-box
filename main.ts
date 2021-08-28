@@ -22,7 +22,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Ai_Talk_1 == true) {
+    if (CanDash == true) {
         if (!(Dashing) && DashMeter.value == DashMeter.max) {
             Dashing = true
             controller.moveSprite(MyPlayer, 0, 0)
@@ -63,6 +63,28 @@ function Hint1 () {
     true
     )
 }
+function Deal_Damage (Damage: number, Constant: boolean, Duration: number, Damage_Speed: number, Knockback: boolean, Sprite2: Sprite, OtherSprite: Sprite, KnockbackAmount: number) {
+    if (Constant) {
+        for (let index = 0; index < Duration; index++) {
+            HealthBar.value += 0 - Damage
+            pause(Damage_Speed)
+        }
+    } else {
+        HealthBar.value += 0 - Damage
+        pause(Damage_Speed)
+        if (Knockback) {
+            if (Sprite2.left == OtherSprite.right) {
+                Sprite2.vx = KnockbackAmount
+            } else if (Sprite2.right == OtherSprite.left) {
+                Sprite2.vx = 0 - KnockbackAmount
+            } else if (Sprite2.top == OtherSprite.bottom) {
+                Sprite2.vy = KnockbackAmount
+            } else if (Sprite2.bottom == OtherSprite.top) {
+                Sprite2.vy = 0 - KnockbackAmount
+            }
+        }
+    }
+}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (MyPlayer.overlapsWith(Note_1)) {
         Note1()
@@ -88,6 +110,7 @@ function AI_Talk_1 () {
     game.showLongText("Good luck!!!", DialogLayout.Bottom)
     Setup_Dash()
     Ai_Talk_1 = true
+    CanDash = true
 }
 function Level_2 () {
     tiles.setTilemap(tilemap`level 2`)
@@ -131,7 +154,9 @@ function Level_2 () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Player)
+    CanDash = true
     Setup_Dash()
+    Setup_Health_Bar()
     tiles.placeOnTile(MyPlayer, tiles.getTileLocation(10, 17))
     tiles.placeOnTile(Bully_1, tiles.getTileLocation(14, 3))
     tiles.placeOnTile(Bully_2, tiles.getTileLocation(16, 3))
@@ -140,7 +165,15 @@ function Level_2 () {
     controller.moveSprite(MyPlayer)
     Victim.say("HELP!!!")
 }
-function SetPositions () {
+function Level_1 () {
+    tiles.setTilemap(tilemap`level1`)
+    Read = false
+    Hint1_has_spawned = false
+    Ai_Talk_1 = false
+    Ai_Talk_1 = false
+    Note_1 = sprites.create(assets.image`Note`, SpriteKind.Note)
+    CanDash = false
+    Note_1.say("A")
     tiles.placeOnTile(MyPlayer, tiles.getTileLocation(7, 8))
     tiles.placeOnTile(Note_1, tiles.getTileLocation(9, 6))
 }
@@ -162,6 +195,13 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         MyPlayer.setImage(assets.image`Player_BottomRight`)
     }
 })
+function Set_Level () {
+    if (Level == 1) {
+        Level_1()
+    } else if (Level == 2) {
+        Level_2()
+    }
+}
 function LoadingScreen (Duration: number) {
     Cloud_Sprite = sprites.createProjectileFromSide(assets.image`Cloud`, 100, 0)
     Cloud_Sprite.setPosition(0, randint(0, 120))
@@ -189,14 +229,18 @@ function LoadingScreen (Duration: number) {
         Level_2()
     })
 }
+function Setup_Health_Bar () {
+    HealthBar = statusbars.create(55, 10, StatusBarKind.Health)
+    HealthBar.value = 100
+    HealthBar.setBarBorder(2, 1)
+    HealthBar.setStatusBarFlag(StatusBarFlag.SmoothTransition, true)
+    HealthBar.setLabel("HP")
+    HealthBar.positionDirection(CollisionDirection.Top)
+    HealthBar.setOffsetPadding(45, 1)
+}
 function InitializeVariables () {
-    Level = 1
+    Level = 2
     DashSpeed = 500
-    Read = false
-    Hint1_has_spawned = false
-    Ai_Talk_1 = false
-    Ai_Talk_1 = false
-    Note_1 = sprites.create(assets.image`Note`, SpriteKind.Note)
     MyPlayer = sprites.create(assets.image`Player`, SpriteKind.Player)
 }
 function Note1 () {
@@ -218,34 +262,54 @@ function Note1 () {
         game.showLongText("Mission: Break out of this room", DialogLayout.Top)
     }
 }
-let Hint1_has_spawned = false
-let Read = false
 let Loading_text: Sprite = null
 let Loading_dots: Sprite = null
 let Cloud_Sprite: Sprite = null
+let Hint1_has_spawned = false
+let Read = false
 let Victim: Sprite = null
 let Bully_2: Sprite = null
 let Bully_1: Sprite = null
 let Loading = false
 let Level = 0
+let Ai_Talk_1 = false
+let Note_1: Sprite = null
+let HealthBar: StatusBarSprite = null
 let Hint: Sprite = null
 let DashSpeed = 0
 let Direction = ""
 let Dashing = false
-let Ai_Talk_1 = false
+let CanDash = false
 let DashMeter: StatusBarSprite = null
-let Note_1: Sprite = null
 let MyPlayer: Sprite = null
-tiles.setTilemap(tilemap`level1`)
 InitializeVariables()
-SetPositions()
 controller.moveSprite(MyPlayer)
 scene.cameraFollowSprite(MyPlayer)
-Note_1.say("A")
+Set_Level()
 game.onUpdate(function () {
-    if (MyPlayer.tileKindAt(TileDirection.Center, assets.tile`Check Point`)) {
-        game.splash("You have escaped the room")
-        LoadingScreen(500)
+    if (Read == true) {
+        if (Hint1_has_spawned == false) {
+            if (MyPlayer.tileKindAt(TileDirection.Left, assets.tile`Wall_1_Right_Cracked`)) {
+                Hint1()
+                Hint1_has_spawned = true
+            }
+        }
+        if (Hint1_has_spawned == true) {
+            if (MyPlayer.overlapsWith(Hint)) {
+                Hint.destroy()
+                if (Ai_Talk_1 == false) {
+                    AI_Talk_1()
+                }
+            }
+        }
+    }
+})
+game.onUpdate(function () {
+    if (Level == 1) {
+        if (MyPlayer.tileKindAt(TileDirection.Center, assets.tile`Check Point`)) {
+            game.splash("You have escaped the room")
+            LoadingScreen(5000)
+        }
     }
 })
 game.onUpdate(function () {
@@ -270,24 +334,6 @@ game.onUpdate(function () {
     }
 })
 game.onUpdate(function () {
-    if (Read == true) {
-        if (Hint1_has_spawned == false) {
-            if (MyPlayer.tileKindAt(TileDirection.Left, assets.tile`Wall_1_Right_Cracked`)) {
-                Hint1()
-                Hint1_has_spawned = true
-            }
-        }
-        if (Hint1_has_spawned == true) {
-            if (MyPlayer.overlapsWith(Hint)) {
-                Hint.destroy()
-                if (Ai_Talk_1 == false) {
-                    AI_Talk_1()
-                }
-            }
-        }
-    }
-})
-game.onUpdate(function () {
     if (Ai_Talk_1 == true) {
         if (!(Dashing)) {
             DashMeter.value += 1
@@ -305,6 +351,16 @@ forever(function () {
         }
         if (Dashing && MyPlayer.overlapsWith(Bully_2)) {
             Bully_2.destroy(effects.disintegrate, 500)
+        }
+    }
+})
+forever(function () {
+    if (Level == 2) {
+        if (MyPlayer.overlapsWith(Bully_1)) {
+            Deal_Damage(7, false, 0, 1000, true, null, Bully_1, 0)
+        }
+        if (MyPlayer.overlapsWith(Bully_2)) {
+            Deal_Damage(5, false, 0, 1000, true, MyPlayer, Bully_2, 5)
         }
     }
 })
