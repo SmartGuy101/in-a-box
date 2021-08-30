@@ -71,23 +71,35 @@ function Deal_Damage (Damage: number, Constant: boolean, Duration: number, Damag
         }
     } else {
         HealthBar.value += 0 - Damage
-        pause(Damage_Speed)
-        if (Knockback) {
-            if (Sprite2.left == OtherSprite.right) {
-                Sprite2.vx = KnockbackAmount
-            } else if (Sprite2.right == OtherSprite.left) {
-                Sprite2.vx = 0 - KnockbackAmount
-            } else if (Sprite2.top == OtherSprite.bottom) {
-                Sprite2.vy = KnockbackAmount
-            } else if (Sprite2.bottom == OtherSprite.top) {
-                Sprite2.vy = 0 - KnockbackAmount
-            }
+        controller.moveSprite(Sprite2, 0, 0)
+        Sprite2.say(Math.floor(Sprite2.left))
+        OtherSprite.say(Math.floor(OtherSprite.right))
+        if (Sprite2.left == OtherSprite.left) {
+            Sprite2.vx = KnockbackAmount
+            Sprite2.say(":)")
+        } else if (Sprite2.right == OtherSprite.left) {
+            Sprite2.vx = 0 - KnockbackAmount
+            Sprite2.say(":)")
+        } else if (Sprite2.top == OtherSprite.bottom) {
+            Sprite2.vy = KnockbackAmount
+            Sprite2.say(":)")
+        } else if (Sprite2.bottom == OtherSprite.top) {
+            Sprite2.vy = 0 - KnockbackAmount
+            Sprite2.say(":)")
         }
+        timer.after(100, function () {
+            Sprite2.vx = 0
+            Sprite2.vy = 0
+            controller.moveSprite(Sprite2, 100, 100)
+        })
+        pause(Damage_Speed)
     }
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (MyPlayer.overlapsWith(Note_1)) {
-        Note1()
+    if (Level == 1) {
+        if (MyPlayer.overlapsWith(Note_1)) {
+            Note1()
+        }
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -116,7 +128,7 @@ function Level_2 () {
     tiles.setTilemap(tilemap`level 2`)
     Level = 2
     Loading = false
-    MyPlayer = sprites.create(assets.image`Player`, SpriteKind.Player)
+    MyPlayer.setFlag(SpriteFlag.Invisible, false)
     Bully_1 = sprites.create(assets.image`Meanies`, SpriteKind.Enemy)
     Bully_2 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
@@ -206,10 +218,11 @@ function LoadingScreen (Duration: number) {
     Cloud_Sprite = sprites.createProjectileFromSide(assets.image`Cloud`, 100, 0)
     Cloud_Sprite.setPosition(0, randint(0, 120))
     Loading = true
+    CanDash = false
     scene.setBackgroundColor(9)
     tiles.setTilemap(tilemap`LoadingScreen`)
     scene.centerCameraAt(0, 0)
-    MyPlayer.destroy()
+    MyPlayer.setFlag(SpriteFlag.Invisible, true)
     Hint.destroy()
     Note_1.destroy()
     DashMeter.destroy()
@@ -271,9 +284,9 @@ let Victim: Sprite = null
 let Bully_2: Sprite = null
 let Bully_1: Sprite = null
 let Loading = false
-let Level = 0
 let Ai_Talk_1 = false
 let Note_1: Sprite = null
+let Level = 0
 let HealthBar: StatusBarSprite = null
 let Hint: Sprite = null
 let DashSpeed = 0
@@ -334,10 +347,16 @@ game.onUpdate(function () {
     }
 })
 game.onUpdate(function () {
-    if (Ai_Talk_1 == true) {
+    if (CanDash == true) {
         if (!(Dashing)) {
             DashMeter.value += 1
         }
+    }
+})
+game.onUpdateInterval(1000, function () {
+    if (Loading) {
+        Cloud_Sprite = sprites.createProjectileFromSide(assets.image`Cloud`, 100, 0)
+        Cloud_Sprite.setPosition(0, randint(0, 120))
     }
 })
 forever(function () {
@@ -356,17 +375,11 @@ forever(function () {
 })
 forever(function () {
     if (Level == 2) {
-        if (MyPlayer.overlapsWith(Bully_1)) {
-            Deal_Damage(7, false, 0, 1000, true, null, Bully_1, 0)
+        if (spriteutils.distanceBetween(MyPlayer, Bully_1) == 0) {
+            Deal_Damage(7, false, 0, 1000, true, MyPlayer, Bully_1, 50)
         }
-        if (MyPlayer.overlapsWith(Bully_2)) {
-            Deal_Damage(5, false, 0, 1000, true, MyPlayer, Bully_2, 5)
+        if (spriteutils.distanceBetween(MyPlayer, Bully_2) == 0) {
+            Deal_Damage(5, false, 0, 1000, true, MyPlayer, Bully_2, 50)
         }
-    }
-})
-game.onUpdateInterval(3000, function () {
-    if (Loading) {
-        Cloud_Sprite = sprites.createProjectileFromSide(assets.image`Cloud`, 100, 0)
-        Cloud_Sprite.setPosition(0, randint(0, 120))
     }
 })
