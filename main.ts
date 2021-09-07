@@ -70,29 +70,32 @@ function Deal_Damage (Damage: number, Constant: boolean, Duration: number, Damag
             pause(Damage_Speed)
         }
     } else {
-        HealthBar.value += 0 - Damage
-        controller.moveSprite(Sprite2, 0, 0)
-        Sprite2.say(Math.floor(Sprite2.left))
-        OtherSprite.say(Math.floor(OtherSprite.right))
-        if (Sprite2.left == OtherSprite.left) {
-            Sprite2.vx = KnockbackAmount
-            Sprite2.say(":)")
-        } else if (Sprite2.right == OtherSprite.left) {
-            Sprite2.vx = 0 - KnockbackAmount
-            Sprite2.say(":)")
-        } else if (Sprite2.top == OtherSprite.bottom) {
-            Sprite2.vy = KnockbackAmount
-            Sprite2.say(":)")
-        } else if (Sprite2.bottom == OtherSprite.top) {
-            Sprite2.vy = 0 - KnockbackAmount
-            Sprite2.say(":)")
+        if (!(Knockback)) {
+            HealthBar.value += 0 - Damage
+            pause(Damage_Speed)
+        } else {
+            controller.moveSprite(Sprite2, 0, 0)
+            if (Sprite2.left > OtherSprite.right - 16 && Sprite2.top > OtherSprite.bottom) {
+                Sprite2.vx = KnockbackAmount
+                Sprite2.say(":)")
+            } else if (Sprite2.left + 16 > OtherSprite.left) {
+                Sprite2.vx = 0 - KnockbackAmount
+                Sprite2.say(":)")
+            } else if (Sprite2.top > OtherSprite.bottom - 16) {
+                Sprite2.vy = KnockbackAmount
+                Sprite2.say(":)")
+            } else if (Sprite2.bottom == OtherSprite.top + 16) {
+                Sprite2.vy = 0 - KnockbackAmount
+                Sprite2.say(":)")
+            }
+            HealthBar.value += 0 - Damage
+            timer.after(100, function () {
+                Sprite2.vx = 0
+                Sprite2.vy = 0
+                controller.moveSprite(Sprite2, 100, 100)
+            })
+            pause(Damage_Speed)
         }
-        timer.after(100, function () {
-            Sprite2.vx = 0
-            Sprite2.vy = 0
-            controller.moveSprite(Sprite2, 100, 100)
-        })
-        pause(Damage_Speed)
     }
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -375,11 +378,13 @@ forever(function () {
 })
 forever(function () {
     if (Level == 2) {
-        if (spriteutils.distanceBetween(MyPlayer, Bully_1) == 0) {
-            Deal_Damage(7, false, 0, 1000, true, MyPlayer, Bully_1, 50)
+        MyPlayer.say(Math.floor(MyPlayer.top))
+        Bully_2.say(Math.floor(Bully_2.bottom))
+        if (spriteutils.distanceBetween(MyPlayer, Bully_1) < 14) {
+            Deal_Damage(7, false, 0, 1000, true, MyPlayer, Bully_1, 100)
         }
-        if (spriteutils.distanceBetween(MyPlayer, Bully_2) == 0) {
-            Deal_Damage(5, false, 0, 1000, true, MyPlayer, Bully_2, 50)
+        if (spriteutils.distanceBetween(MyPlayer, Bully_2) < 14) {
+            Deal_Damage(5, false, 0, 1000, true, MyPlayer, Bully_2, 100)
         }
     }
 })
