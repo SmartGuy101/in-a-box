@@ -75,18 +75,18 @@ function Deal_Damage (Damage: number, Constant: boolean, Duration: number, Damag
             pause(Damage_Speed)
         } else {
             controller.moveSprite(Sprite2, 0, 0)
-            if (Sprite2.left > OtherSprite.right - 16 && Sprite2.top > OtherSprite.bottom) {
+            if (Sprite2.left >= OtherSprite.right - 16 && (Sprite2.bottom + 15 >= OtherSprite.bottom || Sprite2.top - 15 >= OtherSprite.top)) {
                 Sprite2.vx = KnockbackAmount
-                Sprite2.say(":)")
-            } else if (Sprite2.left + 16 > OtherSprite.left) {
+                Sprite2.say("left")
+            } else if (Sprite2.left + 16 >= OtherSprite.left && (Sprite2.bottom + 15 >= OtherSprite.bottom || Sprite2.top - 15 >= OtherSprite.top)) {
                 Sprite2.vx = 0 - KnockbackAmount
-                Sprite2.say(":)")
-            } else if (Sprite2.top > OtherSprite.bottom - 16) {
+                Sprite2.say("right")
+            } else if (Sprite2.top >= OtherSprite.bottom && (Sprite2.right + 15 >= OtherSprite.right || Sprite2.right - 15 >= OtherSprite.left)) {
                 Sprite2.vy = KnockbackAmount
-                Sprite2.say(":)")
-            } else if (Sprite2.bottom == OtherSprite.top + 16) {
+                Sprite2.say("down")
+            } else if (Sprite2.bottom <= OtherSprite.top) {
                 Sprite2.vy = 0 - KnockbackAmount
-                Sprite2.say(":)")
+                Sprite2.say("up")
             }
             HealthBar.value += 0 - Damage
             timer.after(100, function () {
@@ -378,8 +378,8 @@ forever(function () {
 })
 forever(function () {
     if (Level == 2) {
-        MyPlayer.say(Math.floor(MyPlayer.top))
-        Bully_2.say(Math.floor(Bully_2.bottom))
+        MyPlayer.say(Math.floor(MyPlayer.top - 15))
+        Bully_2.say(Math.floor(Bully_2.top))
         if (spriteutils.distanceBetween(MyPlayer, Bully_1) < 14) {
             Deal_Damage(7, false, 0, 1000, true, MyPlayer, Bully_1, 100)
         }
